@@ -23,6 +23,7 @@ img_size = (32,64)
 img_margin = (0,0)
 starting_position = (200,400)
 walking = [(1,0),(2,0),(3,0),(4,0),(5,0),(6,0)]
+jumping = [(7,1),(8,1),(9,1)]
 gravity = 0.6
 
 class Runner(pygame.sprite.Sprite):
@@ -34,11 +35,12 @@ class Runner(pygame.sprite.Sprite):
 
 		self.rect = pygame.Rect((self.margin_x,self.margin_y,self.width,self.height))
 		self.image = pygame.Surface(self.rect.size).convert()
-		self.image.blit(self.sheet, (0,0), self.rect)	#from the sheet, grab the correct image
+		self.image.blit(self.sheet, (8,1), self.rect)	#from the sheet, grab the correct image
 		
 		(self.rect.x,self.rect.y) = position
 
 		self.walking_animation = 0
+		self.jumping_animation = 0
 		self.ground = position[1]
 		self.jumping = False
 		self.velocity = (0.0,0.0)
@@ -69,6 +71,12 @@ class Runner(pygame.sprite.Sprite):
 			vy -= self.jump_velocity
 			self.velocity = (vx,vy)
 			self.jumping = True
+			(i, j) = jumping[self.jumping_animation]
+			x = (self.width + self.margin_x) * i + self.margin_x
+			y = (self.height + self.margin_y) * j + self.margin_y
+			self.image.blit(self.sheet, (0, 0), (x, y, self.width, self.height))
+			self.jumping_animation += 1
+			self.jumping_animation %= len(jumping)
 				
 
 def main():
@@ -79,6 +87,7 @@ def main():
 	rgroup = pygame.sprite.Group()
 	runner = Runner('adventurer.png',starting_position)
 	rgroup.add(runner)
+
 
 	while True:
 		clock.tick(FPS)

@@ -37,7 +37,7 @@ def main():
 	SONG_END = pygame.USEREVENT + 1
 	pygame.mixer.music.set_endevent(SONG_END)
 
-	soundtrack = ['Ambient_Blues_Joe_ID_773.mp3','Chief_Inspector_Baldwin_ID_873.mp3']
+	soundtrack = ['Lemon_Yellow_Hayes_-_07_-_Triality.mp3']
 	current_track = random.choice(soundtrack)
 	pygame.mixer.music.load(os.path.join('mp3', current_track))
 	pygame.mixer.music.play()
